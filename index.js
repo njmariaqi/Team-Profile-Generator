@@ -1,8 +1,15 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const Choice = require('inquirer/lib/objects/choice');
+const Employee = require('./lib/Employee');
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+const engineerArry = [];
+const internArry = [];
+const managerArry = [];
 
-function askManager() {
+function askManager() {    
      inquirer
           .prompt([
                {
@@ -27,7 +34,8 @@ function askManager() {
                }
           ])
           .then(data => {
-               const managerData = data;
+               const managerInfo = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOffice);
+               managerArry.push(managerInfo);
                mainMenu();
           })
 }
@@ -57,7 +65,8 @@ function askEngineer() {
                }
           ])
           .then(data => {
-               const engineerData = data;
+               const engineerInfo = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub);
+               engineerArry.push(engineerInfo);
                mainMenu();
           })
 }      
@@ -87,7 +96,8 @@ function askIntern() {
                }
           ])
           .then(data => {
-               const internData = data;
+               const internInfo = new Intern(data.internName, data.internId, data.internEmail, data.internSchool);
+               internArry.push(internInfo);
                mainMenu();
      })
 }      
@@ -110,6 +120,9 @@ function mainMenu() {
                     askEngineer();
                } else {
                     console.log('You have finished building the team!');
+                    console.log(managerArry);
+                    console.log(engineerArry);
+                    console.log(internArry);
                }
           })
 }
