@@ -7,15 +7,13 @@ function printInfo(obj, info) {
                                    <div class="card-header-title">
                                         ${obj.name}
                                    </div>
-                                   <div class="card-header-icon">
-                                        title
-                                   </div>
                               </header>
                               <div class="card-content">
                                    <div class="content">
-                                        <ul style="list-style: none;"> 
+                                        <ul style="list-style: none;">
+                                             <li>${obj.role}</span></li> 
                                              <li>ID: <span>${obj.id}</span></li>
-                                             <li>E-mail: <span>${obj.email}</span></li>
+                                             <li>E-mail: <span><a href=mailto:${obj.email}>${obj.email}</a></span></li>
                                              <li>${info}</li>
                                         </ul>
                                    </div>

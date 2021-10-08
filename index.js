@@ -7,9 +7,6 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const { info } = require('console');
 const printInfo = require('./src/print');
-const engineerArry = [];
-const internArry = [];
-const managerArry = [];
 const teamArry = [];
 
 function askManager() {    
@@ -37,7 +34,7 @@ function askManager() {
                }
           ])
           .then(data => {
-               const managerInfo = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOffice);
+               const managerInfo = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOffice, 'Manager');
                teamArry.push(printInfo(managerInfo, `Office Number: ${managerInfo.managerOffice}`));
                mainMenu();
           })
@@ -68,8 +65,8 @@ function askEngineer() {
                }
           ])
           .then(data => {
-               const engineerInfo = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub);
-               teamArry.push(printInfo(engineerInfo, `GitHub: ${engineerInfo.engineerGithub}`));
+               const engineerInfo = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub, 'Engineer');
+               teamArry.push(printInfo(engineerInfo, `GitHub: <a href='${engineerInfo.engineerGithub}'>${engineerInfo.engineerGithub}</a>`));
                mainMenu();
           })
 }      
@@ -99,7 +96,7 @@ function askIntern() {
                }
           ])
           .then(data => {
-               const internInfo = new Intern(data.internName, data.internId, data.internEmail, data.internSchool);
+               const internInfo = new Intern(data.internName, data.internId, data.internEmail, data.internSchool, 'Intern');
                teamArry.push(printInfo(internInfo, `School: ${internInfo.internSchool}`));
                mainMenu();
      })
