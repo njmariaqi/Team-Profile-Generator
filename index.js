@@ -5,9 +5,12 @@ const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const { info } = require('console');
+const printInfo = require('./src/print');
 const engineerArry = [];
 const internArry = [];
 const managerArry = [];
+const teamArry = [];
 
 function askManager() {    
      inquirer
@@ -35,7 +38,7 @@ function askManager() {
           ])
           .then(data => {
                const managerInfo = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOffice);
-               managerArry.push(managerInfo);
+               teamArry.push(printInfo(managerInfo, `Office Number: ${managerInfo.managerOffice}`));
                mainMenu();
           })
 }
@@ -66,7 +69,7 @@ function askEngineer() {
           ])
           .then(data => {
                const engineerInfo = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub);
-               engineerArry.push(engineerInfo);
+               teamArry.push(printInfo(engineerInfo, `GitHub: ${engineerInfo.engineerGithub}`));
                mainMenu();
           })
 }      
@@ -97,7 +100,7 @@ function askIntern() {
           ])
           .then(data => {
                const internInfo = new Intern(data.internName, data.internId, data.internEmail, data.internSchool);
-               internArry.push(internInfo);
+               teamArry.push(printInfo(internInfo, `School: ${internInfo.internSchool}`));
                mainMenu();
      })
 }      
@@ -120,9 +123,25 @@ function mainMenu() {
                     askEngineer();
                } else {
                     console.log('You have finished building the team!');
-                    console.log(managerArry);
-                    console.log(engineerArry);
-                    console.log(internArry);
+                    fs.writeFile('teams.html', 
+                    `
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                         <meta charset="UTF-8">
+                         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+                         <title>Team Profile</title>
+                    </head>
+                    <body class="container is-max-widescreen" style="margin-top: 45px;">
+                         <div class="columns is-multiline">
+                         ${teamArry.join('')}
+                         </div>
+                    </body>
+                    </html>
+                    `, 
+                    (err) => err? console.error(error):console.log('Success!'))
                }
           })
 }
